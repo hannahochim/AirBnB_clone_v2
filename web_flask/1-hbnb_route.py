@@ -1,4 +1,6 @@
-cripts starts a simple flask application
+#!/usr/bin/python3
+"""
+Scripts starts a simple flask application
 """
 from flask import Flask
 app = Flask(__name__)
