@@ -1,52 +1,50 @@
 #!/usr/bin/python3
 """
-Script starts a simple flask application
+Script that starts a Flask web application:
+listening on 0.0.0.0, port 5000
+with Fifth routes
 """
-from flask import Flask
+from flask import Flask, escape, request
+from flask import render_template
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
 def hello():
-    """
-    Prints a message when / is called in the url
-    """
-    return 'Hello HBNB!'
+    """ First Route that display Hello HBNB"""
+    return "Hello HBNB!"
 
 
 @app.route('/hbnb', strict_slashes=False)
-def hbnb():
-    """
-    Prints a message when /hbnb is called in the url
-    """
+def hello_hbnb():
+    """ Second Route that display HBNB"""
     return "HBNB"
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_route(text):
-    """
-    Prints a message when /c/<text> is called in the url
-    """
-    return 'C ' + text.replace('_', ' ')
+def hello_text(text):
+    """ Third Route that display C and text"""
+    return "C {}".format(text.replace("_", " "))
 
 
-@app.route('/python/', defaults={'text': 'is_cool'}, strict_slashes=False)
+@app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def py_route(text):
-    """
-    prints a message when /python/<text> is called in the url
-    Also prints out the default value of text when /python/ is called
-    """
-    return 'Python ' + text.replace('_', ' ')
+def hello_python(text):
+    """ Fourth Route that display Python and text """
+    return "Python {}".format(text.replace("_", " "))
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def num(n):
-    """
-    Prints a message when /number/<n> is called in the url
-    """
-    return '{:d} is a number'.format(n)
+def hello_number(n):
+    """ Fifth Route that display Number """
+    return "%d is a number" % n
 
 
-if __name__ == "__main__":
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def hello_html(n):
+    """ Route that display HTML """
+    return render_template('5-number.html', n=n)
+
+
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
